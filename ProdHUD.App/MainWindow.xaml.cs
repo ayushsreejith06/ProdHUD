@@ -12,7 +12,7 @@ public partial class MainWindow : Window
 {
     private FnKeyListener? _fnListener;
     private const double OpaqueOpacity = 1.0;
-    private const double TranslucentOpacity = 0.6;
+    private const double TranslucentOpacity = 0.35;
 
     public MainWindow()
     {
@@ -33,7 +33,7 @@ public partial class MainWindow : Window
     {
         _fnListener = new FnKeyListener();
         _fnListener.KeyStateChanged += OnFnKeyStateChanged;
-        ApplyPassThroughOpacity(isPassThroughDisabled: true);
+        ApplyPassThroughOpacity(isPassThroughDisabled: false);
 
         // #region agent log
         AppendDebugLog(new DebugLogEntry(
@@ -82,7 +82,14 @@ public partial class MainWindow : Window
             hypothesisId: "D",
             location: "MainWindow::ApplyPassThroughOpacity",
             message: "Opacity updated",
-            data: new { isPassThroughDisabled, opacity = Opacity }
+            data: new
+            {
+                isPassThroughDisabled,
+                opacity = Opacity,
+                allowsTransparency = AllowsTransparency,
+                windowBackground = Background?.ToString(),
+                rootBackground = RootGrid?.Background?.ToString()
+            }
         ));
         // #endregion
     }
